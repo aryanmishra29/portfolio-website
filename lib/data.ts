@@ -25,7 +25,7 @@ export const profile: Profile = {
   github: "https://github.com/aryanmishra29",
   linkedin: "https://linkedin.com/in/aryanmishra29",
   hashnode: "https://aryanmishra.hashnode.dev",
-  portrait: "/aryan-portrait.jpg",
+  portrait: "/aryan-portrait.jpeg",
   headshot: "/aryan-headshot.png",
 };
 
