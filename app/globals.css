@@ -1,0 +1,187 @@
+@import "tailwindcss";
+
+@theme {
+  /* Ink base (near-black to deep purple-black) */
+  --color-ink-950: #040009;
+  --color-ink-900: #07010f;
+  --color-ink-800: #0d0320;
+  --color-ink-700: #120527;
+  --color-ink-600: #1c033c;
+  --color-ink-500: #241050;
+
+  /* Brand purple ramp */
+  --color-brand-900: #1c033c;
+  --color-brand-800: #2a0f5e;
+  --color-brand-700: #371e77;
+  --color-brand-600: #432090;
+  --color-brand-500: #4b28a4;
+  --color-brand-400: #7c3aed;
+  --color-brand-300: #a78bfa;
+
+  /* Deep violet accent ramp (darker, richer than bright violet) */
+  --color-accent: #6d28d9;        /* violet-700 — primary */
+  --color-accent-soft: #8b5cf6;   /* violet-500 — highlights */
+  --color-accent-bright: #a78bfa; /* violet-400 — small accents on dark */
+  --color-accent-deep: #4c1d95;   /* violet-900 — buttons/shadows */
+  --color-accent-darkest: #2e1065;/* violet-950 */
+  --color-accent-glow: rgba(109, 40, 217, 0.55);
+
+  /* Aliases so legacy "neon-*" classes resolve to the new deep violet ramp */
+  --color-neon-cyan: #8b5cf6;
+  --color-neon-violet: #a78bfa;
+  --color-neon-magenta: #6d28d9;
+  --color-neon-pink: #4c1d95;
+
+  /* Fonts */
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+
+  /* Radii */
+  --radius-lg: 0.875rem;
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.75rem;
+
+  /* Animations */
+  --animate-aurora: aurora 22s ease-in-out infinite;
+  --animate-float: float 8s ease-in-out infinite;
+  --animate-pulse-glow: pulseGlow 3.5s ease-in-out infinite;
+  --animate-shine: shine 3s linear infinite;
+  --animate-scroll-cue: scrollCue 2s ease-in-out infinite;
+
+  @keyframes aurora {
+    0%, 100% { transform: translate3d(-10%, -10%, 0) rotate(0deg) scale(1); }
+    50% { transform: translate3d(10%, 5%, 0) rotate(180deg) scale(1.15); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { opacity: 0.55; }
+    50% { opacity: 0.9; }
+  }
+
+  @keyframes shine {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  @keyframes scrollCue {
+    0% { transform: translateY(0); opacity: 0; }
+    30% { opacity: 1; }
+    100% { transform: translateY(14px); opacity: 0; }
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html, body {
+    background-color: var(--color-ink-900);
+    color: rgb(226 232 240);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: var(--font-sans);
+  }
+
+  body {
+    background-image:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(76, 29, 149, 0.30), transparent 65%),
+      radial-gradient(ellipse 50% 40% at 100% 30%, rgba(55, 30, 119, 0.18), transparent 65%),
+      radial-gradient(ellipse 55% 35% at 0% 80%, rgba(46, 16, 101, 0.20), transparent 65%);
+    background-attachment: fixed;
+    min-height: 100dvh;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--color-accent) 45%, transparent);
+    color: white;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent-soft);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--color-ink-900); }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--color-brand-500), var(--color-brand-700));
+    border-radius: 999px;
+    border: 2px solid var(--color-ink-900);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--color-accent), var(--color-brand-500));
+  }
+}
+
+@layer utilities {
+  /* Refined single-hue gradient: white → soft violet */
+  .text-gradient-neon {
+    background: linear-gradient(92deg, #ffffff 0%, #d8ccff 55%, #a78bfa 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shine 8s linear infinite;
+  }
+
+  .text-gradient-violet {
+    background: linear-gradient(120deg, #ffffff 0%, #c4b5fd 70%, #a78bfa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-accent {
+    color: var(--color-accent-soft);
+  }
+
+  .neon-glow-accent {
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--color-accent) 35%, transparent),
+      0 0 26px -6px color-mix(in oklab, var(--color-accent) 55%, transparent);
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgba(167, 139, 250, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(167, 139, 250, 0.05) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .bg-dots {
+    background-image: radial-gradient(rgba(167, 139, 250, 0.14) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  .mask-fade-b {
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  }
+
+  .mask-radial {
+    -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .motion-safe-only { animation: none !important; transition: none !important; }
+  }
+}
